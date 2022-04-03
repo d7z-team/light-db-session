@@ -1,3 +1,3 @@
-rootProject.name = "KotlinProjectTemplate"
+rootProject.name = "light-db-session"
 include("bom")
-include("template")
+include("session-core")

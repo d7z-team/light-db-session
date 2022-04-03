@@ -6,6 +6,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
+        maven { url = project.uri("https://jitpack.io") }
     }
     dependencies {
         val kotlinVersion = rootProject.property("version.kotlin")!!
@@ -20,6 +21,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
+        maven { url = project.uri("https://jitpack.io") }
     }
 }
 
