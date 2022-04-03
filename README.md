@@ -24,6 +24,9 @@ implementation("com.github.d7z-team.light-db-session:session-core")
 
 ## 更新日志
 
+- `0.1.0 via light-db 0.3.+`
+  - 拆解后的第一个版本
+
 ## LICENSE
 
 此项目使用 MIT License ，更多详情请查看 [License文件](./LICENSE)
