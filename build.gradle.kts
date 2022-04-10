@@ -6,8 +6,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
-        maven("https://m2.open-edgn.cn/repository/maven-snapshots/")
-        maven("https://m2.open-edgn.cn/repository/maven-releases/")
+        maven("https://repo.open-edgn.cn/maven/")
         maven { url = project.uri("https://jitpack.io") }
     }
     dependencies {
@@ -23,8 +22,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
-        maven("https://m2.open-edgn.cn/repository/maven-snapshots/")
-        maven("https://m2.open-edgn.cn/repository/maven-releases/")
+        maven("https://repo.open-edgn.cn/maven/")
         maven { url = project.uri("https://jitpack.io") }
     }
 }
