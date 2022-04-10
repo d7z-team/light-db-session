@@ -6,6 +6,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
+        maven("https://m2.open-edgn.cn/repository/maven-snapshots/")
         maven { url = project.uri("https://jitpack.io") }
     }
     dependencies {
@@ -21,6 +22,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
+        maven("https://m2.open-edgn.cn/repository/maven-snapshots/")
         maven { url = project.uri("https://jitpack.io") }
     }
 }

@@ -15,6 +15,10 @@ java {
     modularity.inferModulePath.set(true)
 }
 
+ktlint {
+    version.set("0.45.1")
+}
+
 val junitJupiterVersion = rootProject.property("version.junit.jupiter")!!
 val junitLauncherVersion = rootProject.property("version.junit.launcher")!!
 val objectFormatVersion = rootProject.property("version.object-format")!!
@@ -58,5 +62,13 @@ publishing {
     }
     repositories {
         mavenLocal()
+        maven {
+            name = "InternalRepo"
+            url = uri("https://m2.open-edgn.cn/repository/maven-snapshots/")
+            credentials {
+                username = (project.findProperty("edgn.m2.user") ?: System.getenv("USERNAME")).toString()
+                password = (project.findProperty("edgn.m2.key") ?: System.getenv("TOKEN")).toString()
+            }
+        }
     }
 }
