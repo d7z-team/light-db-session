@@ -66,8 +66,8 @@ publishing {
             name = "InternalRepo"
             url = uri("https://m2.open-edgn.cn/repository/maven-snapshots/")
             credentials {
-                username = (project.findProperty("edgn.m2.user") ?: System.getenv("USERNAME")).toString()
-                password = (project.findProperty("edgn.m2.key") ?: System.getenv("TOKEN")).toString()
+                username = (project.findProperty("edgn.m2.user") ?: System.getenv("USERNAME"))?.toString()
+                password = (project.findProperty("edgn.m2.key") ?: System.getenv("TOKEN"))?.toString()
             }
         }
     }
