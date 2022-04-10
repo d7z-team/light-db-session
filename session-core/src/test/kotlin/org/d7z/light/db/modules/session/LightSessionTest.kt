@@ -8,7 +8,7 @@ internal class LightSessionTest {
 
     @Test
     fun findSessionGroupContext() {
-        val build = LightSession.Builder().build()
+        val build = LightSession()
         val newSession = build.getSessionGroupContext().newSession()
         println(newSession.sessionToken)
         println(newSession.updateTime)

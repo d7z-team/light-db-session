@@ -1,7 +1,5 @@
 package org.d7z.light.db.modules.session.api
 
-import org.d7z.light.db.api.LightDB
-import org.d7z.objects.format.api.IDataCovert
 import java.util.Optional
 
 /**
@@ -28,10 +26,12 @@ interface ILightSession {
     /**
      * 使用 Session ID 获取 Session 所属的分组
      *
+     * 如果未发现 Session Group 则自动创建
+     *
      * @param sessionId String 根据配置的规则创建的 Session ID
-     * @return Optional<ISessionGroupContext> Session 的分组
+     * @return ISessionGroupContext Session 的分组
      */
-    fun findSessionGroupContext(sessionId: String): Optional<ISessionGroupContext>
+    fun findSessionGroupContext(sessionId: String): ISessionGroupContext
 
     /**
      * 获取此 Session ID 的分组类型
@@ -39,34 +39,4 @@ interface ILightSession {
      * @return String 会话类型
      */
     fun getSessionType(sessionId: String): String
-
-    /**
-     * Session 创造着
-     * @property container LightMapGroup
-     */
-    interface Builder {
-        val container: LightDB
-
-        /**
-         * 配置类型转换器
-         */
-        var dataCovert: IDataCovert
-
-        /**
-         * cache名称头部
-         */
-        var namespace: String
-
-        /**
-         * Session ID 生成规则
-         */
-        var sessionIDGenerate: ISessionGenerate
-
-        /**
-         * 配置全局过期时间 （秒）
-         */
-        var ttl: Long
-
-        fun build(): ILightSession
-    }
 }

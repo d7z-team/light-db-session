@@ -11,12 +11,20 @@ import org.d7z.objects.format.api.IDataCovert
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
 
-class LightSession private constructor(
-    val lightDB: LightDB,
-    private val namespace: String,
-    val dataCovert: IDataCovert,
-    val globalTtl: Long,
-    val sessionGenerate: ISessionGenerate,
+/**
+ *
+ * @property lightDB LightDB LightDB 实例
+ * @property namespace String Cache 在 LightDB 下的命名空间
+ * @property dataCovert IDataCovert 类型转换器
+ * @property globalTtl Long 全局 Session 过期时间
+ * @property sessionGenerate ISessionGenerate  Session ID 生成器
+ */
+class LightSession @JvmOverloads constructor(
+    val lightDB: LightDB = LightDB,
+    private val namespace: String = "session",
+    val dataCovert: IDataCovert = IDataCovert,
+    val globalTtl: Long = 60 * 60,
+    val sessionGenerate: ISessionGenerate = SimpleSessionGenerate(),
 ) : ILightSession {
     private val map = ConcurrentHashMap<String, ISessionGroupContext>()
     override fun getSessionGroupContext(group: String): ISessionGroupContext {
@@ -26,31 +34,15 @@ class LightSession private constructor(
     }
 
     override fun findSessionContext(sessionId: String): Optional<ISessionContext> {
-        return findSessionGroupContext(sessionId).flatMap { it.querySession(sessionId) }
+        return findSessionGroupContext(sessionId).querySession(sessionId)
     }
 
-    override fun findSessionGroupContext(sessionId: String): Optional<ISessionGroupContext> {
+    override fun findSessionGroupContext(sessionId: String): ISessionGroupContext {
         val name = sessionGenerate.getSessionTypeName(sessionId)
-        return if (map.containsKey(name)) {
-            Optional.of(getSessionGroupContext(name))
-        } else {
-            Optional.empty()
-        }
+        return getSessionGroupContext(name)
     }
 
     override fun getSessionType(sessionId: String): String {
         return sessionGenerate.getSessionTypeName(sessionId)
-    }
-
-    class Builder(override val container: LightDB = LightDB) :
-        ILightSession.Builder {
-        override var namespace: String = "session"
-        override var dataCovert: IDataCovert = IDataCovert
-        override var ttl: Long = 60 * 60
-        override var sessionIDGenerate: ISessionGenerate = SimpleSessionGenerate()
-
-        override fun build(): ILightSession {
-            return LightSession(container, namespace, dataCovert, ttl, sessionIDGenerate)
-        }
     }
 }
