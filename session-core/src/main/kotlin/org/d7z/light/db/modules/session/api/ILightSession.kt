@@ -13,19 +13,32 @@ interface ILightSession {
      *
      * 如果不存在名为 `name` 的 SessionGroupContext 则创建新的的 SessionGroupContext
      *
-     * @param name String 会话组名称
+     * @param group String 会话分组
      * @return SessionGroupContext<T> 会话组上下文
      */
-    fun findSessionGroupContext(name: String = "default"): ISessionGroupContext
+    fun getSessionGroupContext(group: String = "default"): ISessionGroupContext
 
     /**
      * 根据 Session ID 获取 Session Context
-     *
-     * 注意：Session ID 包含的 name 必须已在当前实例创建
-     *
+     **
      * @param sessionId String 获取 session id
      */
-    fun findGroupContextById(sessionId: String): Optional<ISessionContext>
+    fun findSessionContext(sessionId: String): Optional<ISessionContext>
+
+    /**
+     * 使用 Session ID 获取 Session 所属的分组
+     *
+     * @param sessionId String 根据配置的规则创建的 Session ID
+     * @return Optional<ISessionGroupContext> Session 的分组
+     */
+    fun findSessionGroupContext(sessionId: String): Optional<ISessionGroupContext>
+
+    /**
+     * 获取此 Session ID 的分组类型
+     * @param sessionId String 会话 ID
+     * @return String 会话类型
+     */
+    fun getSessionType(sessionId: String): String
 
     /**
      * Session 创造着
@@ -47,7 +60,7 @@ interface ILightSession {
         /**
          * Session ID 生成规则
          */
-        var sessionIDGenerate: ISessionIDGenerate
+        var sessionIDGenerate: ISessionGenerate
 
         /**
          * 配置全局过期时间 （秒）

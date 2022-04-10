@@ -14,10 +14,10 @@ class SessionGroupContext(
     val mapContext = lightSession.lightDB.withMap(groupName)
 
     override fun newSession(): ISessionContext {
-        var key = lightSession.sessionIDGenerate.generate(name)
-        while (mapContext.exists(key)) {
-            key = lightSession.sessionIDGenerate.generate(name)
-        }
+        var key: String
+        do {
+            key = lightSession.sessionGenerate.generate(name)
+        } while (mapContext.exists(key))
         return getOrCreateSession(key)
     }
 
