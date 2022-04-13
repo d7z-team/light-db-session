@@ -30,6 +30,13 @@ interface ISessionGroupContext {
     fun newSession(): ISessionContext
 
     /**
+     * 使用合法规范的 Session ID 创建 Session
+     *
+     * 如果 Session 存在则跳过创建
+     */
+    fun newSession(sessionId: String): ISessionContext
+
+    /**
      * 根据session id 获取 Session 上下文
      *
      * @param session String session id

@@ -3,6 +3,7 @@ package org.d7z.light.db.modules.session.internal
 import org.d7z.light.db.modules.session.LightSession
 import org.d7z.light.db.modules.session.api.ISessionContext
 import org.d7z.light.db.modules.session.api.ISessionGroupContext
+import org.d7z.light.db.modules.session.api.SessionException
 import java.util.Optional
 
 class SessionGroupContext(
@@ -19,6 +20,13 @@ class SessionGroupContext(
             key = lightSession.sessionGenerate.generate(name)
         } while (mapContext.exists(key))
         return getOrCreateSession(key)
+    }
+
+    override fun newSession(sessionId: String): ISessionContext {
+        if (lightSession.sessionGenerate.getSessionTypeName(sessionId) != name) {
+            throw SessionException("Session ID $sessionId 不合法.")
+        }
+        return getOrCreateSession(sessionId)
     }
 
     private fun getOrCreateSession(session: String): ISessionContext {
